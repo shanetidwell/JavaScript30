@@ -9,7 +9,7 @@
 
     html {
       font-family: sans-serif;
-      background: #ffc600;
+      background: #a6bb99;
     }
 
     .inbox {
@@ -29,6 +29,7 @@
     .item:last-child {
       border-bottom: 0;
     }
+    
 
     input:checked + p {
       background: #F9F9F9;
@@ -96,6 +97,33 @@
   </div>
 
 <script>
+  let lastChecked;
+
+  function handleCheck(e){   
+    let inBetween = false;
+    if(this.checked && e.shiftKey){
+      checkboxes.forEach(checkbox=>{
+        if(checkbox === this || checkbox===lastChecked){
+          inBetween = !inBetween
+        }
+
+        if (inBetween) {
+        checkbox.checked = true;
+      }
+      })
+    }
+    lastChecked = this;
+
+  }
+ 
+
+  let id = 0;
+  const checkboxes = document.querySelectorAll(`.item > input`);
+  checkboxes.forEach(checkbox=>{
+    checkbox.setAttribute("id", `${id}`)
+    checkbox.addEventListener("click", handleCheck);
+    id++;
+  });
 </script>
 </body>
 </html>
